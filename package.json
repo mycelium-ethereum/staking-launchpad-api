@@ -19,11 +19,17 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@ethersproject/bignumber": "^5.7.0",
+    "@ethersproject/units": "^5.7.0",
+    "@nestjs/cache-manager": "^2.1.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
+    "cache-manager": "^5.2.3",
+    "ethers": "^6.6.4",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "undici": "^5.22.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.1",
