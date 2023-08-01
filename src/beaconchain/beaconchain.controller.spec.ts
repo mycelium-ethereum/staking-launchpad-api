@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { BeaconchainController } from './beaconchain.controller';
 import { BeaconchainService } from './beaconchain.service';
-import { DepositsService } from './deposits.service';
+import { ValidatorsService } from './validators.service';
 import { PerformanceService } from './performance.service';
 import { ListCacheManager } from './listCacheManager.service';
 import { ValidatorInfo } from './interfaces/beaconchain.interface';
@@ -18,6 +18,7 @@ const mockInfo = (index: string): ValidatorInfo => ({
 describe('BeaconchainController', () => {
   let beaconchainController: BeaconchainController;
   let beaconchainService: BeaconchainService;
+  let validatorsService: ValidatorsService;
   let listCacheManager: ListCacheManager;
 
   beforeEach(async () => {
@@ -30,7 +31,7 @@ describe('BeaconchainController', () => {
       controllers: [BeaconchainController],
       providers: [
         BeaconchainService,
-        DepositsService,
+        ValidatorsService,
         ListCacheManager,
         PerformanceService,
       ],
@@ -41,6 +42,7 @@ describe('BeaconchainController', () => {
       BeaconchainController,
     );
     listCacheManager = moduleRef.get<ListCacheManager>(ListCacheManager);
+    validatorsService = moduleRef.get<ValidatorsService>(ValidatorsService);
   });
 
   describe('stats', () => {
@@ -49,7 +51,7 @@ describe('BeaconchainController', () => {
         .spyOn(listCacheManager, 'getMissing')
         .mockReturnValueOnce(Promise.resolve({ missing: '1,2', cached: [] }));
       jest
-        .spyOn(beaconchainService, 'syncMissingInfo')
+        .spyOn(validatorsService as any, 'syncMissingInfo')
         .mockReturnValueOnce(Promise.resolve([]));
 
       expect(
@@ -62,7 +64,7 @@ describe('BeaconchainController', () => {
         .spyOn(listCacheManager, 'getMissing')
         .mockReturnValueOnce(Promise.resolve({ missing: '1,2', cached: [] }));
       jest
-        .spyOn(beaconchainService, 'syncMissingInfo')
+        .spyOn(validatorsService as any, 'syncMissingInfo')
         .mockReturnValueOnce(Promise.resolve([mockInfo('1'), mockInfo('2')]));
 
       let value = await beaconchainController.getValidatorsInfo('1,2');
@@ -75,17 +77,19 @@ describe('BeaconchainController', () => {
           cached: [mockInfo('1'), mockInfo('2')],
         }),
       );
-      jest.spyOn(beaconchainService, 'syncMissingInfo').mockReturnValueOnce(
-        Promise.resolve([
-          {
-            pubKey: '0x3',
-            index: '3',
-            name: '',
-            status: 'active_online',
-            depositTime: undefined,
-          },
-        ]),
-      );
+      jest
+        .spyOn(validatorsService as any, 'syncMissingInfo')
+        .mockReturnValueOnce(
+          Promise.resolve([
+            {
+              pubKey: '0x3',
+              index: '3',
+              name: '',
+              status: 'active_online',
+              depositTime: undefined,
+            },
+          ]),
+        );
 
       value = await beaconchainController.getValidatorsInfo('1,2,3');
 

@@ -6,16 +6,17 @@ import {
   ValidatorInfo,
   WaitTimes,
 } from './interfaces/beaconchain.interface';
+import { RawBlockData } from './interfaces/performance.interface';
 
 @Controller('validators')
 export class BeaconchainController {
   constructor(private beaconchainService: BeaconchainService) {}
 
   @Get('stats/:validators')
-  getAllValidators(
+  getValidatorsStats(
     @Param('validators') validators: string,
   ): Promise<Validator[]> {
-    return this.beaconchainService.getAllValidators(validators);
+    return this.beaconchainService.getValidatorsStats(validators);
   }
 
   @Get('info/:validators')
@@ -30,6 +31,12 @@ export class BeaconchainController {
     @Param('validators') validators: string,
   ): Promise<ValidatorInfo[]> {
     return this.beaconchainService.getValidatorsPerformance(validators);
+  }
+  @Get('blocks/:validators')
+  getValidatorsBlocks(
+    @Param('validators') validators: string,
+  ): Promise<Record<string, RawBlockData[]>> {
+    return this.beaconchainService.getValidatorsBlocks(validators);
   }
 
   @Get('queue_info')

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { BeaconchainController } from './beaconchain.controller';
 import { BeaconchainService } from './beaconchain.service';
-import { DepositsService } from './deposits.service';
+import { ValidatorsService } from './validators.service';
 import { PerformanceService } from './performance.service';
 import { ListCacheManager } from './listCacheManager.service';
 
@@ -9,7 +9,7 @@ import { ListCacheManager } from './listCacheManager.service';
   controllers: [BeaconchainController],
   providers: [
     BeaconchainService,
-    DepositsService,
+    ValidatorsService,
     ListCacheManager,
     PerformanceService,
   ],
