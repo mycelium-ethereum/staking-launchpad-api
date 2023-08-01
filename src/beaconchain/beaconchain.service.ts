@@ -3,6 +3,8 @@ import {
   Validator,
   WaitTimes,
   ValidatorInfo,
+  RawValidatorIndexPubKey,
+  ValidatorIndexPubKey,
 } from './interfaces/beaconchain.interface';
 import { RawBlockData } from './interfaces/performance.interface';
 import { ValidatorsService } from './validators.service';
@@ -22,27 +24,29 @@ export class BeaconchainService {
     private readonly performanceService: PerformanceService,
   ) {}
 
+  // VALIDATOR EVENTS AND STATS
   async getValidatorsStats(validatorsList: string): Promise<Validator[]> {
-    console.info('Fetching validators', validatorsList);
+    console.info('Fetching validators stats', validatorsList);
     return this.validatorsService.getStats(validatorsList);
   }
-
   async getValidatorsInfo(validatorsList: string): Promise<ValidatorInfo[]> {
     console.info('Fetching validators info', validatorsList);
     return this.validatorsService.getInfo(validatorsList);
   }
 
+  // PERFORMANCE
   async getValidatorsBlocks(
     validatorsList: string,
   ): Promise<Record<string, RawBlockData[]>> {
     console.info('Fetching block data', validatorsList);
     return this.performanceService.getBlockData(validatorsList);
   }
-
   async getValidatorsPerformance(validatorsList: string): Promise<any> {
-    return this.performanceService.findAll(validatorsList);
+    console.info('Fetching performance data', validatorsList);
+    return this.performanceService.getAll(validatorsList);
   }
 
+  // GENERAL
   async getEstimatedWaitTimes(): Promise<WaitTimes> {
     console.info('Fetching wait times');
     const cached: WaitTimes | null = await this.listCacheManager.get(
@@ -84,5 +88,16 @@ export class BeaconchainService {
     };
     await this.listCacheManager.set('wait_times', waitTimes);
     return waitTimes;
+  }
+
+  async getUsersValidators(account: string): Promise<ValidatorIndexPubKey[]> {
+    const usersValidators: { data: RawValidatorIndexPubKey[] } = await fetch(
+      `${BEACON_CHAIN_API}/validator/eth1/${account}`,
+    ).then((res) => res.json());
+
+    return usersValidators.data.map((v: RawValidatorIndexPubKey) => ({
+      pubKey: v.publickey,
+      index: v.validatorindex,
+    }));
   }
 }

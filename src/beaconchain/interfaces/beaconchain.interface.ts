@@ -64,3 +64,14 @@ export interface WaitTimes {
   activeValidators: number;
   maxIndex: number;
 }
+
+export interface RawValidatorIndexPubKey {
+  publickey: string;
+  valid_signature: boolean;
+  validatorindex: number;
+}
+
+export interface ValidatorIndexPubKey {
+  pubKey: string;
+  index: number;
+}

@@ -5,6 +5,7 @@ import {
   Validator,
   ValidatorInfo,
   WaitTimes,
+  ValidatorIndexPubKey,
 } from './interfaces/beaconchain.interface';
 import { RawBlockData } from './interfaces/performance.interface';
 
@@ -37,6 +38,13 @@ export class BeaconchainController {
     @Param('validators') validators: string,
   ): Promise<Record<string, RawBlockData[]>> {
     return this.beaconchainService.getValidatorsBlocks(validators);
+  }
+
+  @Get('user/:account')
+  getUsersValidators(
+    @Param('account') account: string,
+  ): Promise<ValidatorIndexPubKey[]> {
+    return this.beaconchainService.getUsersValidators(account);
   }
 
   @Get('queue_info')

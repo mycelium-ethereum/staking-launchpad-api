@@ -17,7 +17,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 export class PerformanceService {
   constructor(private listCacheManager: ListCacheManager) {}
 
-  async findAll(
+  async getAll(
     validatorsList: string,
   ): Promise<Record<string, ValidatorPerformance>> {
     const clData = await this.getClPerformance(validatorsList);
