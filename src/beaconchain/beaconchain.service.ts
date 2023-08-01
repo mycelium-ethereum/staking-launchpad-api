@@ -139,12 +139,17 @@ export class BeaconchainService {
     );
     const exitTimes = estimateExitWaitingTime(beaconExiting, activeValidators);
 
+    // TODO these are hardcoded but should be dynamic
+    const EXITED = 79456;
+    const DEPOSITED = 185;
+
     const waitTimes = {
       entryTimes,
       exitTimes,
       activeValidators,
+      maxIndex: activeValidators + beaconEntering + EXITED + DEPOSITED,
     };
-    this.listCacheManager.set('wait_times', waitTimes);
+    await this.listCacheManager.set('wait_times', waitTimes);
     return waitTimes;
   }
 

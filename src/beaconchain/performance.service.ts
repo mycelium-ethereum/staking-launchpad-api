@@ -88,7 +88,7 @@ export class PerformanceService {
       'cl',
     );
     if (missing !== '') {
-      console.debug(`Missing performance info for ${missing}`);
+      console.debug(`Missing cl performance info for ${missing}`);
       const clPerformanceData = await fetch(
         `${BEACON_CHAIN_API}/validator/${validatorsList}/performance`,
       ).then((res) => res.json());
@@ -124,7 +124,7 @@ export class PerformanceService {
       'el',
     );
     if (missing !== '') {
-      console.debug(`Missing performance info for ${missing}`);
+      console.debug(`Missing el performance info for ${missing}`);
       const elPerformanceData = await fetch(
         `${BEACON_CHAIN_API}/validator/${validatorsList}/execution/performance`,
       ).then((res) => res.json());
@@ -161,7 +161,7 @@ export class PerformanceService {
     );
     // const cachedObject = cached.reduce((o, c) => { o[c.posConsensus.proposerindex] = c; return o}, {})
     if (missing !== '') {
-      console.debug(`Missing performance info for ${missing}`);
+      console.debug(`Missing blocks performance info for ${missing}`);
       const blockData = await fetch(
         `${BEACON_CHAIN_API}/execution/${validatorsList}/produced`,
       ).then((res) => res.json());

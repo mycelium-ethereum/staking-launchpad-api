@@ -45,11 +45,11 @@ export class ListCacheManager {
     };
   }
 
-  set(key: string, value: any): void {
-    this.cacheManager.set(key, value, ONE_HOUR);
+  async set(key: string, value: any): Promise<void> {
+    return this.cacheManager.set(key, value, ONE_HOUR);
   }
 
   async get(key: string): Promise<any> {
-    this.cacheManager.get(key);
+    return this.cacheManager.get(key);
   }
 }

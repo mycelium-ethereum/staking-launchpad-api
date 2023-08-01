@@ -62,4 +62,5 @@ export interface WaitTimes {
     exitWaitingTimeSeconds: number;
   };
   activeValidators: number;
+  maxIndex: number;
 }

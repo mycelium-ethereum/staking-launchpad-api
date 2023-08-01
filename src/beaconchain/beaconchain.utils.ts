@@ -109,24 +109,24 @@ const calculateWaitTime = (
     aveChurn = currentChurn;
   }
 
-  let waitingTimeSeconds = Math.round(churnTimeDays * 86400);
+  const waitingTimeSeconds = Math.round(churnTimeDays * 86400);
 
   // let waitingTimeMonths = Math.floor(waitingTimeSeconds / 2592000);
   // let waitingTimeMonthsDays = Math.round(
   // ((waitingTimeSeconds % 2592000) / 2592000) * 30
   // );
 
-  let waitingTimeDays = Math.floor(waitingTimeSeconds / 86400);
-  let waitingTimeDaysHours = Math.round(
+  const waitingTimeDays = Math.floor(waitingTimeSeconds / 86400);
+  const waitingTimeDaysHours = Math.round(
     ((waitingTimeSeconds % 86400) / 86400) * 24,
   );
 
-  let waitingTimeHours = Math.floor(waitingTimeSeconds / 3600);
-  let waitingTimeHoursMinutes = Math.round(
+  const waitingTimeHours = Math.floor(waitingTimeSeconds / 3600);
+  const waitingTimeHoursMinutes = Math.round(
     ((waitingTimeSeconds % 3600) / 3600) * 60,
   );
 
-  let waitingTimeDaysRaw = waitingTimeSeconds / 86400;
+  const waitingTimeDaysRaw = waitingTimeSeconds / 86400;
 
   let formattedWaitTime, daysText, hoursText, minutesText;
 
