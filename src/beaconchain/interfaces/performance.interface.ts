@@ -84,7 +84,7 @@ export interface ELPerformanceData {
 
 export interface ELPerformance {
   index: number;
-  performance1D: number;
-  performance31D: number;
-  performance7D: number;
+  performance1D: BigNumber;
+  performance31D: BigNumber;
+  performance7D: BigNumber;
 }

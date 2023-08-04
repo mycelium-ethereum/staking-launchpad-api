@@ -92,6 +92,7 @@ export class PerformanceService {
       const clPerformanceData = await fetch(
         `${BEACON_CHAIN_API}/validator/${validatorsList}/performance`,
       ).then((res) => res.json());
+
       // clPerformance amounts are in 9 decimal units need to parse them to 18
       const missingPerformance = clPerformanceData.data.map(
         (v: CLPerformanceData) => ({
@@ -129,15 +130,15 @@ export class PerformanceService {
         `${BEACON_CHAIN_API}/validator/${validatorsList}/execution/performance`,
       ).then((res) => res.json());
 
-      // clPerformance amounts are in 9 decimal units need to parse them to 18
       const missingPerformance: ELPerformance[] = elPerformanceData.data.map(
-        (v: ELPerformanceData) => ({
-          index: v.validatorindex,
-          // these amounts are already in 18 decimal units
-          performance1d: BigNumber.from(v.performance1d.toString()),
-          performance7d: BigNumber.from(v.performance7d.toString()),
-          performance31d: BigNumber.from(v.performance31d.toString()),
-        }),
+        (v: ELPerformanceData) =>
+          ({
+            index: v.validatorindex,
+            // these amounts are already in 18 decimal units
+            performance1D: BigNumber.from(v.performance1d.toString()),
+            performance7D: BigNumber.from(v.performance7d.toString()),
+            performance31D: BigNumber.from(v.performance31d.toString()),
+          } as ELPerformance),
       );
 
       missingPerformance.forEach((v) =>
@@ -159,7 +160,7 @@ export class PerformanceService {
       'bl',
       'object',
     );
-    // const cachedObject = cached.reduce((o, c) => { o[c.posConsensus.proposerindex] = c; return o}, {})
+
     if (missing !== '') {
       console.debug(`Missing blocks performance info for ${missing}`);
       const blockData = await fetch(
