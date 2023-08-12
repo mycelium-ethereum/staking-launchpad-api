@@ -24,7 +24,12 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A small API service to improve performance and loading times of the staking-launchpad. Initially the launchpad made a number of queries to beaconcha.in API using a subscribed key. This service aims to improve performance by caching results of the numerous queries. Caches results on a per validator basis.
+eg if the user queries for `/validators/performance/555555` and then later `validators/performance/555555,555556` the API returns fresh results for `555556` (assuming it hasnt been queried before) and cached results for `555555`. The cache lifetime is 1 hour.
+
+## TODO
+- [x] Cache beaconchain results to improve API key usage and performance (this does not perform well if the user is querying an unknown list of validators for the first time)
+- [] Continuously sync beaconchain results with some known list of PierTwo validators to greatly increase performance for a very large set of known validators
 
 ## Installation
 
@@ -58,16 +63,13 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## Documentation
+```yarn start```
+Swagger docs at `/api`
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Deployment
+Deployment is done manually through the GCP instance. Ensure you are on master.
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-  Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+1. `git pull`
+2. `docker build . -t staking-launchpad-api`
+3. `docker run staking-launchpad-api`

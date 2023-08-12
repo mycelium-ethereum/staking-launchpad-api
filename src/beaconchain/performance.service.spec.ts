@@ -355,14 +355,12 @@ describe('PerformanceService', () => {
           json: jsonMock,
         }),
       );
-      jest
-        .spyOn(listCacheManager, 'getMissing')
-        .mockReturnValueOnce(
-          Promise.resolve({
-            missing: '1',
-            cached: { '2': mockedBlockData['2'] },
-          }),
-        );
+      jest.spyOn(listCacheManager, 'getMissing').mockReturnValueOnce(
+        Promise.resolve({
+          missing: '1',
+          cached: { '2': mockedBlockData['2'] },
+        }),
+      );
 
       const allBlockData = await performanceService.getBlockData(
         mockedValidatorsList,

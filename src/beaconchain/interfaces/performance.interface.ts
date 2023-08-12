@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber';
 
-type Rewards = {
+export type Rewards = {
   el: BigNumber;
   cl: BigNumber;
 };

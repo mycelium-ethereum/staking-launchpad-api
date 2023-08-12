@@ -6,7 +6,10 @@ import {
   RawValidatorIndexPubKey,
   ValidatorIndexPubKey,
 } from './interfaces/beaconchain.interface';
-import { RawBlockData } from './interfaces/performance.interface';
+import {
+  RawBlockData,
+  ValidatorPerformance,
+} from './interfaces/performance.interface';
 import { ValidatorsService } from './validators.service';
 import { PerformanceService } from './performance.service';
 import { ListCacheManager } from './listCacheManager.service';
@@ -41,7 +44,9 @@ export class BeaconchainService {
     console.info('Fetching block data', validatorsList);
     return this.performanceService.getBlockData(validatorsList);
   }
-  async getValidatorsPerformance(validatorsList: string): Promise<any> {
+  async getValidatorsPerformance(
+    validatorsList: string,
+  ): Promise<Record<string, ValidatorPerformance>> {
     console.info('Fetching performance data', validatorsList);
     return this.performanceService.getAll(validatorsList);
   }
